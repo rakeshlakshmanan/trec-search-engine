@@ -1,0 +1,255 @@
+%%
+%% This is file `sample-sigplan.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `all,proceedings,bibtex,sigplan')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigplan.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%%
+%% Commands for TeXCount
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%%
+%% The first command in your LaTeX source must be the \documentclass
+%% command.
+%%
+%% For submission and review of your manuscript please change the
+%% command to \documentclass[manuscript, screen, review]{acmart}.
+%%
+%% When submitting camera ready or to TAPS, please change the command
+%% to \documentclass[sigconf]{acmart} or whichever template is required
+%% for your publication.
+%%
+%%
+\documentclass[sigplan,screen,nonacm]{acmart}
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Assignment 2 - Queryous Minds}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+\author{Robert D. Linson}
+\affiliation{%
+  \institution{Trinity College Dublin}
+  \city{Dublin}
+  \country{Ireland}}
+\email{linsonr@tcd.ie}
+
+\author{Lukas Linss}
+\affiliation{%
+  \institution{Trinity College Dublin}
+  \city{Dublin}
+  \country{Ireland}}
+\email{linssl@tcd.ie}
+
+\author{Stephen Komolafe}
+\affiliation{
+  \institution{Trinity College Dublin}
+  \city{Dublin}
+  \country{Ireland}}
+\email{komolafs@tcd.ie}
+
+\author{Rakesh Lakshmanan}
+\affiliation{%
+  \institution{Trinity College Dublin}
+  \city{Dublin}
+  \country{Ireland}}
+\email{ralakshm@tcd.ie}
+
+\author{Dmitry Kryukov}
+\affiliation{%
+  \institution{Trinity College Dublin}
+  \city{Dublin}
+  \country{Ireland}}
+\email{kryukovd@tcd.ie}
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Trovato et al.}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+This paper presents the design and implementation of a specialized information retrieval system developed for the CS7IS3 Assignment 2 document collection, comprising news articles from The Financial Times, Federal Register, Foreign Broadcast Information Service and the Los Angeles Times. Our approach addresses the challenge of transforming TREC topics into effective queries that accurately represent users' information needs from a heterogenous mixture of documents. We implemented a baseline system utilizing Apache Lucene with an English analyser and BM25 similarity model, achieving an initial MAP(Mean Average Precision) of 0.2227. However, after utilizing boosting we were able to get the MAP to .30. This paper details our systematic methodology for document parsing, field separation, query generation from multi-faceted topics, and retrieval model selection.
+\end{abstract}
+
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+
+\section{Introduction}
+Information retrieval systems must bridge the gap between users' information needs and relevant documents within large, heterogenous collections. This challenge is particularly pronounced when dealing with TREC-style topics, where a users' information need is expressed not as a simple query string but as a multi-faceted description including a title, detailed description, and narrative specification of relevance criteria.
+
+This paper presents our approach to developing an effective search engine for a heterogenous news article collection spanning multiple sources and time periods. This includes the Financial Times (1991-94), Federal Register (1994), Foreign Broadcast Information Service (1996), and Los Angeles Times (1989-1990). The diverse nature of this collection with varying document structures, journalistic styles and temporal contexts requires careful consideration of both indexing strategies and query formation techniques to achieve optimal retrieval performance.
+
+Our system leverages Apache Lucene as a foundation, utilizing the built in English analyser for text processing and the BM25 similarity model for relevance scoring. We developed an automated pipeline that transforms complex TREC topics into effective queries by extracting and weighting key information from the title, description and narrative fields. Through systematic experimentation with query formulation strategies, we identified that strategic field boosting significantly enhances retrieval effectiveness, improving our MAP from an initial baseline of 0.22 to 0.30.
+
+The primary contributions to this work include: (1) a systematic analysis of query generation strategies for multi-component TREC topics, (2) an effective field boosting approach tailored to news article retrieval, and (3) empirical insights into the relative importance of different topic components for this document collection. Our results demonstrate that while sophisticated linguistic analysis tools are valuable, careful attention to query formulation and term weighting can yield substantial performance gains even with standard retrieval components.
+
+The remainder of this paper is organized as follows: Section 2 reviews related work in TREC-style information retrieval and query optimization; Section 3 describes out system architecture and implementation details; Section 4 presents our results and analysis; and Section 5 concludes with the teams reflections on our approach.
+
+\section{Related Work}
+
+\subsection{Understanding MAP}
+The Mean Average Precision(MAP) metric is designed to evaluate how good the system is at finding and ranking relevant items. It is a common metric in different search engines, recommendation systems and any other tasks where the results are structured in a relevancy order\cite{Bronson2025}.
+
+MAP works in two main steps. First of all, the Average Precision(AP). For each search/query, we measure the AP, which is based on the positions of the relevant items in the result list. Whever the engine retrieves a relevant item, we count how may relevant items appear before it. Each time a relevant item appears at a position K, we calculate the precision at that point, written as P(k). After that we average these precision values across all relevant items. The formula for the AP is:
+\[
+AP = \frac{\sum_{k=1}^{n} P(k)\,\text{rel}(k)}{R},
+\]
+Where: k is the rank position, n is the number of retrieved documents, P(k) is precision at cutoff k, rel(k) is the relevance of item at rank k (binary: 0 or 1), R is the total number of relevant documents.
+
+After getting the AP, we are able to finally compute the MAP score. This is done by simply getting the average of all AP scores. MAP value is always between 0 and 1, where 1 means that the search engine found all the relevant items and perfectly ranked them in an ideal order, and lower scores mean that the relevant items are ranked too low, if found at all. 
+
+What makes MAP a significant metric is its focus on the ranking quality. Because MAP takes an average of all searches/queries, it gives us a good overview of the whole search engine performance, instead of focusing only on a handful of examples. 
+
+In our group project MAP is the main metric we are focusing on in order to evaluate how well our Lucene search engine ranks relevant documents. Map helps us with measuring if the top results are the most useful ones, and it helps us tune the system, make improvements and apply the feedback. We observed the increase in our MAP values throughout the project, which clearly shows that each of the changes that we did to the code influenced the ranking performance.
+
+\subsection{Lucene Overview}
+Lucene is a widely used open-source search library for Java programming language. It provides core tools needed in order to build a full-text search engine. According to Cai’s study on large-scale corpus retrieval, Lucene is based on a modular and flexible system structure that makes it easy to improve and/or adapt to many different kinds of collections\cite{Cai24}.
+
+The main core idea of Lucene is the inverted index, which is used even in modern day search engines. Lucene stores a list of words and records which documents have those words in them instead of storing documents themselves in order.  That makes it possible to search incredibly fast inside extremely large datasets. Cai explains that Lucene builds its index in small segments that are later merged together, which improves the speed of indexing and helps with future updates\cite{Cai24}. 
+
+In addition, Lucene includes several function modules, for example analyzers for breaking the text into small tokens, index the modules for writing purposes and maintaining the index, as well as search modules for running queries. The modules are organized into different packages, like “analysis” or “index” for example, where each of them serves a different part of the whole search process. This design helps developers with plugging custom-made components, like for different file types or multiple languages.
+
+Cai’s work shows us that Lucene supports the common ranking models like BM25, which we are using in our project, which helps with scoring documents based on the term frequency, document length and the rarity of the said words\cite{Cai24}. This makes it possible to use Lucene for large  scale tasks and gives the developers an opportunity to tune the ranking method based on their needs and application.
+
+\subsection{LLM Involvement}
+Recent work has shown that modern machine-learning methods like LLMs(Large Language Model) and deep neural networks, can vastly improve the organization of news articles\cite{Sufi2024}. 
+This paper tests a particular method, which consists of a combination of several neural networks, including convolutional networks and CNNs, with LLMs like GPT. The goal is to classify articles into 3 different categories, and later into 32 relevant subcategories. 
+
+After 232 days of the project, they managed to classify 33979 news articles from 394 sources. This method performed pretty good\cite{Sufi2024}. 
+
+Compared to our own retrieval system, which uses Lucene and BM25, the findings in Sufi’s study suggest that additional help from LLMs can improve the results of traditional search methods. LLMs like GPT can understand the meaning of the articles and context, the relationship between different words/terms in such a way that keyword scoring cannot. 
+
+The paper shows a clear movement toward a hybrid system that combines classical information retrieval tools with new deep-learning methods. Such approaches can help with providing a deeper understanding of the articles content and a better, more flexible handling of different types of documents\cite{Sufi2024}.
+
+\section{Methodology}
+
+The development of our information retrieval system proceeded through several iterative stages, beginning with the establishment of a baseline system and progressing through systematic enhancements. Our initial approach involved replicating the foundational work from Assignment 1, which necessitated transforming queries from their structured topic format into a format compatible with our search infrastructure. Drawing upon empirical results from our previous assignment, we determined that the English analyzer in conjunction with the BM25 similarity model would yield optimal performance across this heterogeneous document collection. The baseline system achieved a Mean Average Precision (MAP) of 0.22, establishing a benchmark for subsequent improvements.
+
+\subsection{Parsing}
+
+A critical preliminary step involved the systematic parsing of documents across four distinct format types. Given the heterogeneity of the document collection, we developed format-specific model files to ensure consistent and accurate parsing for each document type. To facilitate uniform processing in subsequent stages, all parsed documents were converted to an XML representation, thereby standardizing the document structure prior to indexing. This normalization step proved essential for maintaining consistency throughout the retrieval pipeline.
+
+\subsection{Indexing}
+
+Our indexing approach employed the English analyzer and BM25 similarity model as its core components. Although we experimented with several custom analyzers featuring more restrictive linguistic rules, none demonstrated performance improvements over the standard English analyzer. The selection of BM25 as our similarity function was informed by comparative analyses conducted during our individual assignments, which consistently demonstrated its superiority over alternative ranking functions.
+
+The indexing process operates in several stages: first, documents are parsed and normalized as described previously. Next, they are converted into Lucene's internal representation, optimizing them for efficient retrieval operations. This systematic approach ensures that all documents, regardless of their original format, are indexed uniformly and are readily searchable.
+
+\subsection{Topic \& Query Parsing}
+
+The queries provided for this assignment were structured as comprehensive topics, including title, description, and narrative fields, rather than simple keyword queries. This necessitated the development of a query builder to standardize query representation. The query builder ensures that all queries are transformed into a uniform format before applying the same analyzer and similarity model used during indexing, thereby maintaining consistency between the indexing and retrieval processes and ensuring optimal document-query matching.
+
+\subsection{Boosting}
+
+We employed field-level boosting to enhance retrieval effectiveness by differentially weighting document fields according to their expected relevance. Specifically, we applied a boost factor of 3.0 to the content field while reducing the weight of the title field by half (boost factor of 0.5). This weighting scheme reflects the hypothesis that matches within the document content are more indicative of relevance than title matches alone. During query execution, field-specific relevance scores are multiplied by these boost factors, effectively amplifying the contribution of content matches to the overall relevance score.
+
+Additionally, we applied query-level boosting to optimize the contribution of different query components. Through systematic experimentation, we determined that a boost factor of 3.3 for the topic field and 1.5 for the description field yielded optimal results. The combined application of document-level and query-level boosting proved highly effective, improving the MAP from 0.22 to 0.30.
+
+\subsection{Pseudo Relevance Function}
+
+To further enhance retrieval performance, we implemented a pseudo-relevance feedback mechanism, enabling a two-pass retrieval approach. In the initial pass, the system executes the query as described previously. Subsequently, the original query is expanded by extracting and incorporating terms from the top-ranked documents retrieved during the initial search. This expansion operates under the assumption that highly-ranked documents are likely to be relevant and therefore contain vocabulary that can refine the query representation.
+
+The expanded query terms are weighted with relatively high boost factors, while the original query terms are retained with lower weights to preserve the user's original information need. This technique effectively enriches the query vocabulary with terms from pseudo-relevant documents, thereby improving both recall and ranking quality through automatic query refinement. The implementation of pseudo-relevance feedback resulted in a further improvement in MAP from 0.30 to 0.35.
+
+
+\section{Evaluation}
+
+\section{Conclusion}
+
+\cite{Sufi2024}
+\cite{Cai24}
+\cite{DeshmukhSethi2020}
+\cite{Bronson2025}
+
+%%
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sample-base}
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigplan.tex'.
