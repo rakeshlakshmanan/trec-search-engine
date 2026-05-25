@@ -1,0 +1,28 @@
+Meeting 1 - 04/11/25
+Team Name: Queryous Minds
+We met for the first time and began dividing up the work.
+Robby: Documentation/Report
+Lukas: Parser/Indexer
+Rakesh: Generate Queries
+Stephen: Searcher
+Attendance: Robby, Lukas, Stephen, Rakesh
+
+Meeting 2 - 05/11/25
+This was an in-class meeting, where we intend to meet and get work done for the next several weeks. Everyone was in attendance and worked on their different sections.
+Attendance: Robby, Lukas, Stephen, Rakesh
+
+Meeting 3 - 12/11/25
+This was another in-class meeting, between meetings Lukas worked on the document indexer and parser and Rakesh completed the query parser. Robby conducted research and continued prepping the report template. Stephen worked on the Searcher.
+The group decided that for V0, we would use English analyzer with BM25 similarity model.
+Attendance: Robby, Rakesh, Lukas, Stephen
+
+Meeting 4 - 19/11/25
+This was the in-class meeting, we have now completed everything needed for phase one and achieved an initial MAP of .2227.
+In Phase 2 we plan on implementing a custom analyzer and change the index document to contain more information
+Improve user interface
+Attendance: Robby, Rakesh, Lukas, Stephen, Dmitry
+
+Meeting 5 - 26/11/25
+In class this week we discussed the changes that were made to increase our MAP from .22 to .28, this mostly involved boosting.
+We also made progress on the report and detailing the work done to ensure that the report is wholistic.
+Attendance: Robby, Rakesh, Lukas, Stephen, Dmitry
